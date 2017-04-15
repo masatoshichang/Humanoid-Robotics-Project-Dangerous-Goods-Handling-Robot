@@ -1,0 +1,10 @@
+[submodule "src/fetch_ros"]
+	path = src/fetch_ros
+	url = https://github.com/fetchrobotics/fetch_ros.git
+[submodule "src/robot_controllers"]
+	path = src/robot_controllers
+	url = https://github.com/fetchrobotics/robot_controllers.git
+[submodule "src/fetch_gazebo"]
+	path = src/fetch_gazebo
+    url = https://github.com/HumanoidRobotics/fetch_gazebo.git
+    ignore = dirty
