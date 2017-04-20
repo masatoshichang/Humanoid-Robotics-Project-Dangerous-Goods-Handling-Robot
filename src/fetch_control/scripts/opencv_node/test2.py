@@ -16,6 +16,8 @@ import numpy as np
 
 topic = '/head_camera/rgb/image_raw'
 
+trackbar_initialized = False
+
 
 class CVServer(object):
 
@@ -50,82 +52,77 @@ class image_converter:
                 cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
             except CvBridgeError as e:
                 print(e)
-
             print('got image')
-
             (rows,cols,channels) = cv_image.shape
-            cv2.startWindowThread()
 
             cv_image = square(cv_image)
-            print('SQUARE DONE')
-            """
             cv2.imshow("Image window", cv_image)
             cv2.waitKey(3)
-
 
             try:
                 self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
             except CvBridgeError as e:
                 print(e)
-            """
         except Exception as e:
             print('DIED')
             print(e)
 
 
-class HSVSegmenter(object):
 
-    def __init__(self):
-        cv2.namedWindow('hsv', cv2.WINDOW_NORMAL)
-        cv2.createTrackbar('H_l', 'hsv', 0, 255, lambda x: None)
-        cv2.createTrackbar('S_l', 'hsv', 0, 255, lambda x: None)
-        cv2.createTrackbar('V_l', 'hsv', 0, 255, lambda x: None)
+def hsv_trackbar():
+    cv2.namedWindow('hsv', cv2.WINDOW_NORMAL)
+    cv2.createTrackbar('H_l', 'hsv', 0, 255, lambda x: None)
+    cv2.createTrackbar('S_l', 'hsv', 0, 255, lambda x: None)
+    cv2.createTrackbar('V_l', 'hsv', 0, 255, lambda x: None)
 
-        cv2.createTrackbar('H_h', 'hsv', 0, 255, lambda x: None)
-        cv2.createTrackbar('S_h', 'hsv', 0, 255, lambda x: None)
-        cv2.createTrackbar('V_h', 'hsv', 0, 255, lambda x: None)
+    cv2.createTrackbar('H_h', 'hsv', 0, 255, lambda x: None)
+    cv2.createTrackbar('S_h', 'hsv', 0, 255, lambda x: None)
+    cv2.createTrackbar('V_h', 'hsv', 0, 255, lambda x: None)
 
-    def segment(self, image):
-        hl = cv2.getTrackbarPos('H_l', 'hsv')
-        sl = cv2.getTrackbarPos('S_l', 'hsv')
-        vl = cv2.getTrackbarPos('V_l', 'hsv')
+def hsv_thresh(image):
+    hl = cv2.getTrackbarPos('H_l', 'hsv')
+    sl = cv2.getTrackbarPos('S_l', 'hsv')
+    vl = cv2.getTrackbarPos('V_l', 'hsv')
 
-        hh = cv2.getTrackbarPos('H_h', 'hsv')
-        sh = cv2.getTrackbarPos('S_h', 'hsv')
-        vh = cv2.getTrackbarPos('V_h', 'hsv')
+    hh = cv2.getTrackbarPos('H_h', 'hsv')
+    sh = cv2.getTrackbarPos('S_h', 'hsv')
+    vh = cv2.getTrackbarPos('V_h', 'hsv')
 
-        lower = np.array([hl, sl, vl], np.uint8)
-        upper = np.array([hh, sh, vh], np.uint8)
+    lower = np.array([hl, sl, vl], np.uint8)
+    upper = np.array([hh, sh, vh], np.uint8)
 
-        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-        mask = cv2.inRange(hsv, lower, upper)
+    """
+    lower = np.array([1, 0, 20])
+    upper = np.array([100, 250, 200])
+    """
 
-        return mask
+    mask = cv2.inRange(hsv, lower, upper)
 
-    def show_image(self, image):
-        pass
+    return mask
 
-hsv_segment = HSVSegmenter()
 
 
 def square(image):
 
-
+    global trackbar_initialized
     # Color segmentation
-    print('Segmenting')
-    mask = hsv_segment.segment(image)
-    print('Segmenting DONE')
+    if not trackbar_initialized:
+        trackbar_initialized = True
+        hsv_trackbar()
+
+    mask = hsv_thresh(image)
+
 
     ret, thresh = cv2.threshold(mask, 75, 255, 0)
-    print(thresh)
-    print('Getting threshold')
-    cv2.namedWindow("thresh")
-    print('Getting threshold')
 
     cv2.imshow('thresh', thresh)
-    print('Getting threshold done')
     # end of color segmentation
+
+
+
     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     edges = cv2.Canny(thresh, 10, 20, 3)
@@ -138,7 +135,7 @@ def square(image):
 
 
     #cv2.drawContours(image, contours, -1, (0, 255, 0), 3)
-    print('got contours')
+
     for cont in contours:
         approx = cv2.approxPolyDP(cont, cv2.arcLength(cont, True) * 0.02, True)
         print(cv2.contourArea(approx))
