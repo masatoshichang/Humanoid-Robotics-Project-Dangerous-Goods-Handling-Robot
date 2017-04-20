@@ -7,7 +7,7 @@ project(fetch_control)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ros) 
+find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ros)
 
 
 catkin_package()
@@ -16,7 +16,7 @@ catkin_package()
 
 install(
   PROGRAMS
-    scripts/demo.py
+    scripts/robot_control_node/demo.py
 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
@@ -26,7 +26,7 @@ find_package(PCL 1.2 REQUIRED COMPONENTS common io)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
-add_executable(pointcloud2 scripts/pointcloud.cpp)
+add_executable(pointcloud2 scripts/pointcloud_node/pointcloud.cpp)
 target_link_libraries(pointcloud2 ${catkin_LIBRARIES} ${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES}  ${PCL_LIBRARIES})
 add_dependencies(pointcloud2 pointcloud_cpp)
 
