@@ -51,6 +51,8 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
 
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudFiltered(new pcl::PointCloud<pcl::PointXYZRGB>);
 
+    pcl::CentroidPoint<pcl::PointXYZ> centroid;
+
     for (pcl::PointCloud<pcl::PointXYZRGB>::iterator it = cloud->begin(); it != cloud->end(); it++)
     {
         rgb rgbValue;
@@ -72,9 +74,16 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
           p.b = it->b;
 
           cloudFiltered->push_back(p);
+
+          centroid.add (pcl::PointXYZ (p.x, p.y, p.z));
         }
 
     }
+
+    pcl::PointXYZ centroid_point;
+    centroid.get (centroid_point);
+    cout << "x: " << centroid_point.x << ", " << centroid_point.y << ", " << centroid_point.z << endl;
+
 
     //
     //
