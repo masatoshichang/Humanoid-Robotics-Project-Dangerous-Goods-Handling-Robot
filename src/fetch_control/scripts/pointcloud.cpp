@@ -21,8 +21,11 @@
 #include <pcl/console/parse.h>
 
 
+
 #include <pcl/PCLPointCloud2.h>
 #include "std_msgs/String.h"
+
+#include "rgb_to_hsv.hpp"
 
 
 
@@ -30,20 +33,53 @@
 using namespace std;
 
 ros::Publisher pub;
+pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
 
 
 void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
 {
+    cout << "Got message" << endl;
+
     pcl::PointCloud<pcl::PointXYZRGB> cloud2;
+    cout << "Converting" << endl;
+
     pcl::fromROSMsg (*input, cloud2);
     //pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(cloud2);
-    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud = cloud2.makeShared();;
+    cout << "Make shared" << endl;
 
-    pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud = cloud2.makeShared();
+
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudFiltered(new pcl::PointCloud<pcl::PointXYZRGB>);
+
+    for (pcl::PointCloud<pcl::PointXYZRGB>::iterator it = cloud->begin(); it != cloud->end(); it++)
+    {
+        rgb rgbValue;
+        rgbValue.r = (double)it->r;
+        rgbValue.g = (double)it->g;
+        rgbValue.b = (double)it->b;
+
+        hsv hsvValue = rgb2hsv(rgbValue);
+
+        if(hsvValue.h >= 193 && hsvValue.h < 260)
+        {
+          pcl::PointXYZRGB p;
+          p.x = it->x;
+          p.y = it->y;
+          p.z = it->z;
+
+          p.r = it->r;
+          p.g = it->g;
+          p.b = it->b;
+
+          cloudFiltered->push_back(p);
+        }
+
+    }
+
     //
     //
     cout << "SHOWING POINT CLOUD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-   viewer.showCloud (cloud);
+   viewer.showCloud (cloudFiltered);
 
 
     //boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
@@ -69,12 +105,14 @@ int main(int argc, char **argv)
     cout << "HELLO POINTCLOUD!!!" << endl;
 
 
-    ros::init (argc, argv, "pointcloud");
+
+
+    ros::init (argc, argv, "pointcloud2");
     ros::NodeHandle nh;
-    ros::Subscriber sub = nh.subscribe ("/head_camera/depth_registered/image_raw", 1000, cloud_cb);
+    ros::Subscriber sub = nh.subscribe ("/head_camera/depth_registered/points", 1000, cloud_cb);
     pub = nh.advertise<sensor_msgs::PointCloud2> ("output", 1);
 
-
+    /*
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud;
 
     pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
@@ -84,7 +122,7 @@ int main(int argc, char **argv)
 
    while (!viewer.wasStopped ())
    {
-   }
+   }*/
 
     ros::spin ();
 
