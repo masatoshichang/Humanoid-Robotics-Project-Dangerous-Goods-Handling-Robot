@@ -14,8 +14,9 @@
   </node>
 
   <!-- Drive to the table, pick stuff up -->
-  <node name="demo" pkg="fetch_gazebo_demo2" type="demo.py" output="screen" />
-  <node name="opencv" pkg="fetch_gazebo_demo2" type="test2.py" output="screen" />
-  <node name="pointcloud" pkg="fetch_gazebo_demo2" type="pointcloud" output="screen" />
+  <node name="demo" pkg="fetch_control" type="demo.py" output="screen" />
+  <node name="pointcloud" pkg="fetch_control" type="pointcloud" output="screen" />
+
+
 
 </launch>

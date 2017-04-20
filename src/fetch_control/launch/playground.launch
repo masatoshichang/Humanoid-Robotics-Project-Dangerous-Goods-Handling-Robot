@@ -15,11 +15,11 @@
     <arg name="use_sim_time" value="true"/>
     <arg name="headless" value="$(arg headless)"/>
     <!--<arg name="world_name" value="$(find fetch_gazebo)/worlds/test_zone.sdf"/> -->
-    <arg name="world_name" value="$(find fetch_gazebo)/worlds/test_zone2.sdf"/>
+    <arg name="world_name" value="$(find fetch_control)/worlds/test_zone2.sdf"/>
   </include>
 
 <!-- Add table to the world -->
-<!--  <node name="spawn_table" pkg="gazebo_ros" type="spawn_model" 
+<!--  <node name="spawn_table" pkg="gazebo_ros" type="spawn_model"
    args="-urdf -file $(find pr2_launch)/models/table.urdf -model table -x 5.00 -y 0.5"
    respawn="false" output="screen" />
 -->
