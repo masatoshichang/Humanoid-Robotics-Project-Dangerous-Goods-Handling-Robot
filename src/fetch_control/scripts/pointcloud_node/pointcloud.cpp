@@ -38,21 +38,17 @@ pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
 
 void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
 {
-    cout << "Got message" << endl;
-
     pcl::PointCloud<pcl::PointXYZRGB> cloud2;
-    cout << "Converting" << endl;
 
     pcl::fromROSMsg (*input, cloud2);
     //pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(cloud2);
-    cout << "Make shared" << endl;
 
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud = cloud2.makeShared();
 
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudFiltered(new pcl::PointCloud<pcl::PointXYZRGB>);
 
     pcl::CentroidPoint<pcl::PointXYZ> centroid;
-
+    
     for (pcl::PointCloud<pcl::PointXYZRGB>::iterator it = cloud->begin(); it != cloud->end(); it++)
     {
         rgb rgbValue;
@@ -82,30 +78,8 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
 
     pcl::PointXYZ centroid_point;
     centroid.get (centroid_point);
-    cout << "x: " << centroid_point.x << ", " << centroid_point.y << ", " << centroid_point.z << endl;
 
-
-    //
-    //
-    cout << "SHOWING POINT CLOUD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-   viewer.showCloud (cloudFiltered);
-
-
-    //boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
-    /*viewer.setBackgroundColor (0, 0, 0);
-    viewer->addPointCloud<pcl::PointXYZ> (cloud, "sample cloud");
-    viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample cloud");
-    viewer->addCoordinateSystem (1.0);
-    viewer->initCameraParameters ();
-
-    while (!viewer->wasStopped ())
-    {
-        viewer->spinOnce (100);
-        boost::this_thread::sleep (boost::posix_time::microseconds (100000));
-    }*/
-
-    //viewer.showCloud (cloud.makeShared());
-    //
+    viewer.showCloud (cloudFiltered);
 
 }
 

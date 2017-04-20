@@ -30,8 +30,8 @@ class CVServer(object):
     def publish_msg(self, send_str):
         self.pub.publish(send_str)
         self.rate.sleep()
-            
- 
+
+
 
 class image_converter:
 
@@ -50,70 +50,82 @@ class image_converter:
                 cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
             except CvBridgeError as e:
                 print(e)
+
             print('got image')
+
             (rows,cols,channels) = cv_image.shape
-            
+            cv2.startWindowThread()
+
             cv_image = square(cv_image)
+            print('SQUARE DONE')
+            """
             cv2.imshow("Image window", cv_image)
             cv2.waitKey(3)
+
 
             try:
                 self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
             except CvBridgeError as e:
                 print(e)
+            """
         except Exception as e:
             print('DIED')
             print(e)
 
 
+class HSVSegmenter(object):
+
+    def __init__(self):
+        cv2.namedWindow('hsv', cv2.WINDOW_NORMAL)
+        cv2.createTrackbar('H_l', 'hsv', 0, 255, lambda x: None)
+        cv2.createTrackbar('S_l', 'hsv', 0, 255, lambda x: None)
+        cv2.createTrackbar('V_l', 'hsv', 0, 255, lambda x: None)
+
+        cv2.createTrackbar('H_h', 'hsv', 0, 255, lambda x: None)
+        cv2.createTrackbar('S_h', 'hsv', 0, 255, lambda x: None)
+        cv2.createTrackbar('V_h', 'hsv', 0, 255, lambda x: None)
+
+    def segment(self, image):
+        hl = cv2.getTrackbarPos('H_l', 'hsv')
+        sl = cv2.getTrackbarPos('S_l', 'hsv')
+        vl = cv2.getTrackbarPos('V_l', 'hsv')
+
+        hh = cv2.getTrackbarPos('H_h', 'hsv')
+        sh = cv2.getTrackbarPos('S_h', 'hsv')
+        vh = cv2.getTrackbarPos('V_h', 'hsv')
+
+        lower = np.array([hl, sl, vl], np.uint8)
+        upper = np.array([hh, sh, vh], np.uint8)
+
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+        mask = cv2.inRange(hsv, lower, upper)
+
+        return mask
+
+    def show_image(self, image):
+        pass
+
+hsv_segment = HSVSegmenter()
+
+
 def square(image):
-    
+
 
     # Color segmentation
-
-    cv2.namedWindow('hsv', cv2.WINDOW_NORMAL)
-    cv2.createTrackbar('H_l', 'hsv', 0, 255, lambda x: None)
-    cv2.createTrackbar('S_l', 'hsv', 0, 255, lambda x: None)
-    cv2.createTrackbar('V_l', 'hsv', 0, 255, lambda x: None)
-
-    cv2.createTrackbar('H_h', 'hsv', 0, 255, lambda x: None)
-    cv2.createTrackbar('S_h', 'hsv', 0, 255, lambda x: None)
-    cv2.createTrackbar('V_h', 'hsv', 0, 255, lambda x: None)
-
-
-    hl = cv2.getTrackbarPos('H_l', 'hsv')
-    sl = cv2.getTrackbarPos('S_l', 'hsv')
-    vl = cv2.getTrackbarPos('V_l', 'hsv')
-
-    hh = cv2.getTrackbarPos('H_h', 'hsv')
-    sh = cv2.getTrackbarPos('S_h', 'hsv')
-    vh = cv2.getTrackbarPos('V_h', 'hsv')
-
-
-    lower = np.array([hl, sl, vl], np.uint8)
-    upper = np.array([hh, sh, vh], np.uint8)
-
-
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    
-    """
-    lower = np.array([1, 0, 20])
-    upper = np.array([100, 250, 200])
-    """
-
-    mask = cv2.inRange(hsv, lower, upper)
+    print('Segmenting')
+    mask = hsv_segment.segment(image)
+    print('Segmenting DONE')
 
     ret, thresh = cv2.threshold(mask, 75, 255, 0)
-
-
+    print(thresh)
+    print('Getting threshold')
+    cv2.namedWindow("thresh")
+    print('Getting threshold')
 
     cv2.imshow('thresh', thresh)
-
+    print('Getting threshold done')
     # end of color segmentation
-
-
-
     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     edges = cv2.Canny(thresh, 10, 20, 3)
@@ -121,12 +133,12 @@ def square(image):
 
     cv2.imshow("canny", edges)
 
-    im2, contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) 
+    im2, contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    
+
 
     #cv2.drawContours(image, contours, -1, (0, 255, 0), 3)
-    
+    print('got contours')
     for cont in contours:
         approx = cv2.approxPolyDP(cont, cv2.arcLength(cont, True) * 0.02, True)
         print(cv2.contourArea(approx))
@@ -136,7 +148,7 @@ def square(image):
             cv2.drawContours(image, approx, -1, (0, 255, 0), 3)
 
             print(cv2.contourArea(approx))
-            
+
 
             corner_list = []
             for i in range(0, 4):
@@ -162,7 +174,7 @@ def square(image):
                     [maxWidth - 1, maxHeight - 1],
                     [0, maxHeight - 1]], dtype = "float32")
 
-            
+
             # dst = np.array([[0,0], [5, 0], [0, 5], [5, 5]], np.float32)
 
             M = cv2.getPerspectiveTransform(rect, dst)
@@ -171,7 +183,7 @@ def square(image):
             cv2.imshow('warped', warped)
 
 
-            """            
+            """
             sorted(corner_list, key=lambda k: [k[0], k[1]])
 
             print(corner_list[0], corner_list[1], corner_list[2], corner_list[3])

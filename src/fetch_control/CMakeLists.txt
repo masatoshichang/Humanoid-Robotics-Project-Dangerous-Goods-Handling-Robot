@@ -17,6 +17,7 @@ catkin_package()
 install(
   PROGRAMS
     scripts/robot_control_node/demo.py
+    scripts/opencv_node/test2.py
 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

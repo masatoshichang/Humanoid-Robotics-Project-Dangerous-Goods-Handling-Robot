@@ -15,7 +15,7 @@
     <arg name="use_sim_time" value="true"/>
     <arg name="headless" value="$(arg headless)"/>
     <!--<arg name="world_name" value="$(find fetch_gazebo)/worlds/test_zone.sdf"/> -->
-    <arg name="world_name" value="$(find fetch_control)/worlds/test_zone2.sdf"/>
+    <arg name="world_name" value="$(find fetch_control)/worlds/looking_at_cube.sdf"/>
   </include>
 
 <!-- Add table to the world -->
