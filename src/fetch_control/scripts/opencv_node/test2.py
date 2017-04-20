@@ -14,10 +14,9 @@ from scipy.spatial import distance as dist
 
 import numpy as np
 
+from hsv_thresh import *
+
 topic = '/head_camera/rgb/image_raw'
-
-trackbar_initialized = False
-
 
 class CVServer(object):
 
@@ -68,17 +67,15 @@ class image_converter:
             print(e)
 
 
-from hsv_thresh import *
+
 
 def square(image):
 
-    global trackbar_initialized
     # Color segmentation
-    if not trackbar_initialized:
-        trackbar_initialized = True
-        hsv_trackbar()
 
-    mask = hsv_thresh(image)
+    HSVThresh().hsv_trackbar()
+
+    mask = HSVThresh().hsv_thresh(image)
 
 
     ret, thresh = cv2.threshold(mask, 75, 255, 0)
