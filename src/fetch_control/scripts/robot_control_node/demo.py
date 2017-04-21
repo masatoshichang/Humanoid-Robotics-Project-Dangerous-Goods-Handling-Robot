@@ -277,7 +277,6 @@ if __name__ == "__main__":
 
     rospy.loginfo("Looking")
     head_action.look_at(1.5, 0, 0.0, "base_link")
-    exit()
     #cv_subscriber = CVSubscriber()
     #rospy.spin()
     """

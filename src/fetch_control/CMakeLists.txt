@@ -7,7 +7,7 @@ project(fetch_control)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ros)
+find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ros grasp_execution)
 
 
 catkin_package()
@@ -18,6 +18,7 @@ install(
   PROGRAMS
     scripts/robot_control_node/demo.py
     scripts/opencv_node/test2.py
+    script/robot_control_node/grasp_test.py
 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

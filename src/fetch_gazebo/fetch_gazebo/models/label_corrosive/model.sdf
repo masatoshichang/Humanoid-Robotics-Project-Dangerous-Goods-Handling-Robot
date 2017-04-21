@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<sdf version='1.4'>
+  <model name="label_corrosive">
+      <static>0</static>
+      <link name='link'>
+        <inertial>
+          <mass>0.25</mass>
+          <inertia>
+            <ixx>0.001</ixx>
+            <ixy>0.000000</ixy>
+            <ixz>0.000000</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0.000000</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://label_corrosive/model.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://label_corrosive/model.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://label_corrosive/model.dae</uri>
+
+              <name></name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0.000000</linear>
+          <angular>0.000000</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+  </model>
+</sdf>
