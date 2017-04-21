@@ -46,3 +46,19 @@ class HSVThresh(object):
         mask = cv2.inRange(hsv, lower, upper)
 
         return mask
+
+
+    @staticmethod
+    def hsv_thresh_green(image):
+
+        lower = np.array([39, 139, 108])
+        upper = np.array([75, 255, 255])
+
+        lower = np.array(lower, np.uint8)
+        upper = np.array(upper, np.uint8)
+
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+        mask = cv2.inRange(hsv, lower, upper)
+
+        return mask

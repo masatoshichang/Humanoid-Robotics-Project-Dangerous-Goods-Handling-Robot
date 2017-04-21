@@ -47,15 +47,15 @@ class image_converter:
     def callback(self,data):
         try:
             try:
-                print('getting image')
                 cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
             except CvBridgeError as e:
                 print(e)
-            print('got image')
             (rows,cols,channels) = cv_image.shape
 
-            cv_image = square(cv_image)
-            cv2.imshow("Image window", cv_image)
+            #cv_image = square(cv_image)
+            #cv2.imshow("Image window", cv_image)
+
+            find_label(cv_image)
             cv2.waitKey(3)
 
             try:
@@ -72,18 +72,13 @@ class image_converter:
 def square(image):
 
     # Color segmentation
-
     HSVThresh().hsv_trackbar()
-
     mask = HSVThresh().hsv_thresh(image)
-
 
     ret, thresh = cv2.threshold(mask, 75, 255, 0)
 
     cv2.imshow('thresh', thresh)
     # end of color segmentation
-
-
 
     img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -161,6 +156,74 @@ def square(image):
             """
 
     return image
+
+
+
+
+
+def find_label(image):
+    mask = HSVThresh().hsv_thresh_green(image)
+    cv2.imshow('thresh', mask)
+    im2, contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    cv2.drawContours(image, contours, -1, (0, 255, 0), 3)
+
+
+    cv2.imshow('contours', image)
+
+
+    list_points = []
+    print('cont:', len(contours))
+
+    if len(contours) != 4:
+        return
+
+    for contour in contours:
+        M = cv2.moments(contour)
+        cx = int(M['m10']/M['m00'])
+        cy = int(M['m01']/M['m00'])
+        cv2.circle(image,(cx,cy), 2, (0,0,255), -1)
+
+        list_points.append([cx, cy])
+
+    cv2.imshow('locations', image)
+
+    ordered = order_points(np.array(list_points))
+
+
+    warp_image(image, ordered)
+
+
+
+
+def warp_image(image, ordered):
+    (tl, tr, br, bl) = ordered
+
+    widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
+    widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
+    maxWidth = max(int(widthA), int(widthB))
+
+    heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
+    heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
+    maxHeight = max(int(heightA), int(heightB))
+    dst = np.array([
+                [0, 0],
+            [maxWidth - 1, 0],
+            [maxWidth - 1, maxHeight - 1],
+            [0, maxHeight - 1]], dtype = "float32")
+
+
+    # dst = np.array([[0,0], [5, 0], [0, 5], [5, 5]], np.float32)
+
+    M = cv2.getPerspectiveTransform(ordered, dst)
+    warped = cv2.warpPerspective(image, M, (maxWidth, maxHeight))
+
+    cv2.imshow('warped', warped)
+
+
+
+
+
 
 
 

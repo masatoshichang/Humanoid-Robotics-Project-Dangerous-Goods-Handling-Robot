@@ -14,18 +14,20 @@
   </node>
 
   <!-- Drive to the table, pick stuff up -->
-  
+
   <node name="demo" pkg="fetch_control" type="demo.py" output="screen" />
 
-<!--
+
 
 <node name="opencv" pkg="fetch_control" type="test2.py" output="screen" />
-
+<!--
 
   <node name="pointcloud2" pkg="fetch_control" type="pointcloud2" output="screen" />
 -->
-  <node name="grasp_test" pkg="fetch_control" type="grasp_test.py" output="screen" />
 
+<!--
+  <node name="grasp_test" pkg="fetch_control" type="grasp_test.py" output="screen" />
+-->
 
 
 

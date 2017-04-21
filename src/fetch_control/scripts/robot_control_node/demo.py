@@ -275,6 +275,15 @@ if __name__ == "__main__":
     move_base.goto(4.1, 0, 0.0)
 
 
+    rospy.loginfo("Looking at label")
+
+    head_action.look_at(5, 0, 0.5, "head_pan_link")
+
+    import time
+    time.sleep(10)
+
+    exit()
+
     rospy.loginfo("Looking")
     head_action.look_at(1.5, 0, 0.0, "base_link")
     #cv_subscriber = CVSubscriber()
