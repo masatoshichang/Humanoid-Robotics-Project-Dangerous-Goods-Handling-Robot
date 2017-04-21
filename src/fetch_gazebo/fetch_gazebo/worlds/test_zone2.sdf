@@ -39,7 +39,21 @@
 
     <include>
         <uri>model://label_corrosive</uri>
-        <pose>4.75 0 0.58 0 0 0</pose>
+        <pose>6.347 0 1.195 0 0 -1.5708</pose>
     </include>
+
+
+      <light type="point" name="point">
+    <pose>0 0 2 0 0 0</pose>
+    <diffuse>127 127 127 255</diffuse>
+    <specular>25 25 25 25</specular>
+    <attenuation>
+      <range>20</range>
+      <linear>0.01</linear>
+      <constant>0.5</constant>
+      <quadratic>0.0</quadratic>
+    </attenuation>
+    <cast_shadows>false</cast_shadows>
+  </light>
   </world>
 </sdf>
