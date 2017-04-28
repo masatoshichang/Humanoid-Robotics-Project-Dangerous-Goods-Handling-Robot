@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(fetch_control_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT " " STREQUAL " ")
+if(NOT "/home/masatoshichang/robotics/fetch_ws/devel/include " STREQUAL " ")
   set(fetch_control_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "/home/masatoshichang/robotics/fetch_ws/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/masatoshichang/robotics/fetch_ws/devel/lib;/opt/ros/indigo/lib)
+    foreach(path /home/masatoshichang/robotics/fetch_ws/devel/lib;/home/masatoshichang/robotics/fetch_ws/devel/lib;/opt/ros/indigo/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -145,7 +145,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(fetch_control_EXPORTED_TARGETS "")
+set(fetch_control_EXPORTED_TARGETS "fetch_control_generate_messages_cpp;fetch_control_generate_messages_eus;fetch_control_generate_messages_lisp;fetch_control_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${fetch_control_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -182,7 +182,7 @@ foreach(depend ${depends})
   list(APPEND fetch_control_EXPORTED_TARGETS ${${fetch_control_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "fetch_control-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${fetch_control_DIR}/${extra})

@@ -26,6 +26,7 @@
 #include "std_msgs/String.h"
 
 #include "rgb_to_hsv.hpp"
+#include "fetch_control/CanSeeCube.h"
 
 
 
@@ -34,6 +35,8 @@ using namespace std;
 
 ros::Publisher pub;
 pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
+
+pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_global;
 
 
 void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
@@ -48,7 +51,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudFiltered(new pcl::PointCloud<pcl::PointXYZRGB>);
 
     pcl::CentroidPoint<pcl::PointXYZ> centroid;
-    
+
     for (pcl::PointCloud<pcl::PointXYZRGB>::iterator it = cloud->begin(); it != cloud->end(); it++)
     {
         rgb rgbValue;
@@ -75,12 +78,28 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
         }
 
     }
+    cloud_global = cloudFiltered;
 
     pcl::PointXYZ centroid_point;
     centroid.get (centroid_point);
 
     viewer.showCloud (cloudFiltered);
 
+}
+
+
+bool can_see_cube(fetch_control::CanSeeCube::Request &req,
+                  fetch_control::CanSeeCube::Response &res)
+{
+    /*
+    if(cloud_global.size() > 10)
+        res.result = 1;
+    else
+        res.result = 0;
+    */
+
+    res.result = cloud_global->size();
+    return true;
 }
 
 int main(int argc, char **argv)
@@ -106,6 +125,8 @@ int main(int argc, char **argv)
    while (!viewer.wasStopped ())
    {
    }*/
+
+    ros::ServiceServer service = nh.advertiseService("can_see_cube", can_see_cube);
 
     ros::spin ();
 

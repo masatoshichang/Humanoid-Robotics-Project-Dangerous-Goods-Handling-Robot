@@ -49,6 +49,9 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from std_msgs.msg import String
 
 
+from fetch_control.srv import *
+
+
 # Move base using navigation stack
 class MoveBaseClient(object):
 
@@ -285,6 +288,18 @@ if __name__ == "__main__":
     head_action.look_at(1.5, 0, 0.0, "base_link")
     #cv_subscriber = CVSubscriber()
     #rospy.spin()
+
+    rospy.wait_for_service('can_see_cube')
+    try:
+        print('Getting from Point Cloud')
+        can_see_cube = rospy.ServiceProxy('can_see_cube', CanSeeCube)
+        result = can_see_cube()
+        print(result)
+    except rospy.ServiceException, e:
+        print("Service call failed: ", e)
+
+    import time
+    time.sleep(100)
     """
     exit()
 
@@ -332,7 +347,7 @@ if __name__ == "__main__":
     rospy.loginfo("Going to container")
     move_base.goto(-3, 0, 0)
     rospy.loginfo("Approaching container")
-    move_base.goto(-4.1, 0, 0)
+    #move_base.goto(-4.1, 0, 0)
 
 
     """

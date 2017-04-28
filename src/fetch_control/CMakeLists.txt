@@ -7,8 +7,20 @@ project(fetch_control)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ros grasp_execution)
+find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ros grasp_execution message_generation)
 
+
+## Generate services in the 'srv' folder
+add_service_files(
+   FILES
+   CanSeeCube.srv
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+)
 
 catkin_package()
 
@@ -18,7 +30,7 @@ install(
   PROGRAMS
     scripts/robot_control_node/demo.py
     scripts/opencv_node/test2.py
-    script/robot_control_node/grasp_test.py
+    scripts/robot_control_node/grasp_test.py
 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
@@ -33,10 +45,10 @@ target_link_libraries(pointcloud2 ${catkin_LIBRARIES} ${PCL_COMMON_LIBRARIES} ${
 add_dependencies(pointcloud2 pointcloud_cpp)
 
 
-install(
-  DIRECTORY launch maps config
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+#install(
+#  DIRECTORY launch maps config
+#  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+#)
 
 
 
@@ -84,12 +96,7 @@ install(
 #   Message2.msg
 # )
 
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -98,11 +105,7 @@ install(
 #   Action2.action
 # )
 
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
