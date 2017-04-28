@@ -279,10 +279,7 @@ if __name__ == "__main__":
 
     head_action.look_at(5, 0, 0.5, "head_pan_link")
 
-    import time
-    time.sleep(10)
 
-    exit()
 
     rospy.loginfo("Looking")
     head_action.look_at(1.5, 0, 0.0, "base_link")
@@ -332,6 +329,13 @@ if __name__ == "__main__":
     rospy.loginfo("Lowering torso...")
     torso_action.move_to([0.0, ])
 
+    rospy.loginfo("Going to container")
+    move_base.goto(-3, 0, 0)
+    rospy.loginfo("Approaching container")
+    move_base.goto(-4.1, 0, 0)
+
+
+    """
     # Move to second table
     rospy.loginfo("Moving to second table...")
     move_base.goto(-3.53, 3.75, 1.57)
@@ -340,6 +344,7 @@ if __name__ == "__main__":
     # Raise the torso using just a controller
     rospy.loginfo("Raising torso...")
     torso_action.move_to([0.4, ])
+    """
 
     # Place the block
     while not rospy.is_shutdown():
