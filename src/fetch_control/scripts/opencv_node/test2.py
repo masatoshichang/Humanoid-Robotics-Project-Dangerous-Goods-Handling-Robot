@@ -12,11 +12,16 @@ from cv_bridge import CvBridge, CvBridgeError
 
 from scipy.spatial import distance as dist
 
+from fetch_com=ntrol.srv import *
+
 import numpy as np
 
 from hsv_thresh import *
 
 topic = '/head_camera/rgb/image_raw'
+
+
+image_global = None
 
 class CVServer(object):
 
@@ -54,6 +59,8 @@ class image_converter:
 
             #cv_image = square(cv_image)
             #cv2.imshow("Image window", cv_image)
+
+            image_global = cv_image
 
             find_label(cv_image)
             cv2.waitKey(3)
@@ -173,7 +180,7 @@ def find_label(image):
 
 
     list_points = []
-    print('cont:', len(contours))
+    # print('cont:', len(contours))
 
     if len(contours) != 4:
         return
@@ -236,16 +243,21 @@ def order_points(pts):
 
     leftMost = leftMost[np.argsort(leftMost[:, 1]), :]
     (tl, bl) = leftMost
-    print(leftMost)
 
     D = dist.cdist(tl[np.newaxis], rightMost, "euclidean")[0]
     (br, tr) = rightMost[np.argsort(D)[::-1], :]
 
 
-    print('tl {}; bl {}; br {}; tr {}'.format(tl, bl, br, tr))
+    # print('tl {}; bl {}; br {}; tr {}'.format(tl, bl, br, tr))
 
 
     return np.array([tl, bl, br, tr], np.float32)
+
+
+
+def can_see_cube(req):
+    return CanSeeCubeOpencv()
+
 
 
 

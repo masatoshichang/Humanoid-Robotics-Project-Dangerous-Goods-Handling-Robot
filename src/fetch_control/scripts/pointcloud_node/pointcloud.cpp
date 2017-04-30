@@ -61,7 +61,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
 
         hsv hsvValue = rgb2hsv(rgbValue);
 
-        if(hsvValue.h >= 193 && hsvValue.h < 260)
+        if(hsvValue.h >= 220 && hsvValue.h < 260)
         {
           pcl::PointXYZRGB p;
           p.x = it->x;
