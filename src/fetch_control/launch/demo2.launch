@@ -18,9 +18,9 @@
   <node name="demo" pkg="fetch_control" type="control_robot.py" output="screen" />
 
 
-<!--
+
 <node name="opencv" pkg="fetch_control" type="test2.py" output="screen" />
--->
+
 
 
   <node name="pointcloud2" pkg="fetch_control" type="pointcloud2" output="screen" />

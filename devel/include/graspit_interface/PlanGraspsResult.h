@@ -124,12 +124,12 @@ struct MD5Sum< ::graspit_interface::PlanGraspsResult_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "17acd5bee661a4024fdb4ee6418627a3";
+    return "d67229e28da994c392966cf3923fc786";
   }
 
   static const char* value(const ::graspit_interface::PlanGraspsResult_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x17acd5bee661a402ULL;
-  static const uint64_t static_value2 = 0x4fdb4ee6418627a3ULL;
+  static const uint64_t static_value1 = 0xd67229e28da994c3ULL;
+  static const uint64_t static_value2 = 0x92966cf3923fc786ULL;
 };
 
 template<class ContainerAllocator>
@@ -168,9 +168,38 @@ float64[] dofs\n\
 float64 epsilon_quality\n\
 float64 volume_quality\n\
 \n\
+# The approach direction to take before picking an object\n\
+geometry_msgs/Vector3Stamped approach_direction\n\
+\n\
+#model_name of object to be grasped\n\
+string object_name\n\
+\n\
+int32 grasp_id\n\
+\n\
+float64[] secondary_qualities\n\
+int32 grasp_source\n\
+int32 grasp_group\n\
+int32 grasp_type\n\
 \n\
 \n\
+geometry_msgs/Pose pre_grasp_pose\n\
+geometry_msgs/Pose final_grasp_pose\n\
+float64[] pre_grasp_dof\n\
+float64[] final_grasp_dof\n\
+#geometry_msgs/Pose demonstration_pose\n\
 \n\
+int32 TYPE_UNKNOWN = 1\n\
+int32 TYPE_FINGERTIP = 2\n\
+int32 TYPE_POWER_GRASP = 3        # free grasp\n\
+int32 TYPE_TABLECONTACT_GRASP = 4 # finger will make contact w/ table\n\
+int32 SPREAD_DOF=0\n\
+int32 FINGER_1_DOF=1\n\
+int32 FINGER_2_DOF=2\n\
+int32 FINGER_3_DOF=3\n\
+int32 SOURCE_EIGENGRASPS=1\n\
+int32 SOURCE_HUMAN=2\n\
+int32 SOURCE_HUMAN_REFINED=3\n\
+int32 SOURCE_TABLETOP_ALIGNED=7\n\
 \n\
 \n\
 ================================================================================\n\
@@ -194,6 +223,43 @@ float64 x\n\
 float64 y\n\
 float64 z\n\
 float64 w\n\
+\n\
+================================================================================\n\
+MSG: geometry_msgs/Vector3Stamped\n\
+# This represents a Vector3 with reference coordinate frame and timestamp\n\
+Header header\n\
+Vector3 vector\n\
+\n\
+================================================================================\n\
+MSG: std_msgs/Header\n\
+# Standard metadata for higher-level stamped data types.\n\
+# This is generally used to communicate timestamped data \n\
+# in a particular coordinate frame.\n\
+# \n\
+# sequence ID: consecutively increasing ID \n\
+uint32 seq\n\
+#Two-integer timestamp that is expressed as:\n\
+# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n\
+# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n\
+# time-handling sugar is provided by the client library\n\
+time stamp\n\
+#Frame this data is associated with\n\
+# 0: no frame\n\
+# 1: global frame\n\
+string frame_id\n\
+\n\
+================================================================================\n\
+MSG: geometry_msgs/Vector3\n\
+# This represents a vector in free space. \n\
+# It is only meant to represent a direction. Therefore, it does not\n\
+# make sense to apply a translation to it (e.g., when applying a \n\
+# generic rigid transformation to a Vector3, tf2 will only apply the\n\
+# rotation). If you want your data to be translatable too, use the\n\
+# geometry_msgs/Point message instead.\n\
+\n\
+float64 x\n\
+float64 y\n\
+float64 z\n\
 ";
   }
 

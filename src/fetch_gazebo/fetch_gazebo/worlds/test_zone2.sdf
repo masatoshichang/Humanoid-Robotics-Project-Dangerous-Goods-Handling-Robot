@@ -28,7 +28,7 @@
     </include>
     -->
     <include>
-        <uri>model://table</uri>
+        <uri>model://long_table</uri>
         <name>table1</name>
         <pose>5 0 0 0 0 0</pose>
     </include>
@@ -45,7 +45,7 @@
 
     <include>
         <uri>model://container</uri>
-        <pose>-5 0 0 0 0 0 </pose>
+        <pose>-5 0 0.65 0 0 0 </pose>
     </include>
 
 

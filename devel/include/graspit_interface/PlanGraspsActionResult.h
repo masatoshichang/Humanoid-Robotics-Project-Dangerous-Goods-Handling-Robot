@@ -126,12 +126,12 @@ struct MD5Sum< ::graspit_interface::PlanGraspsActionResult_<ContainerAllocator> 
 {
   static const char* value()
   {
-    return "bf1945de8c41596cd4970725f6402975";
+    return "172f878cecd7517e42eeb57859d49717";
   }
 
   static const char* value(const ::graspit_interface::PlanGraspsActionResult_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xbf1945de8c41596cULL;
-  static const uint64_t static_value2 = 0xd4970725f6402975ULL;
+  static const uint64_t static_value1 = 0x172f878cecd7517eULL;
+  static const uint64_t static_value2 = 0x42eeb57859d49717ULL;
 };
 
 template<class ContainerAllocator>
@@ -235,9 +235,38 @@ float64[] dofs\n\
 float64 epsilon_quality\n\
 float64 volume_quality\n\
 \n\
+# The approach direction to take before picking an object\n\
+geometry_msgs/Vector3Stamped approach_direction\n\
+\n\
+#model_name of object to be grasped\n\
+string object_name\n\
+\n\
+int32 grasp_id\n\
+\n\
+float64[] secondary_qualities\n\
+int32 grasp_source\n\
+int32 grasp_group\n\
+int32 grasp_type\n\
 \n\
 \n\
+geometry_msgs/Pose pre_grasp_pose\n\
+geometry_msgs/Pose final_grasp_pose\n\
+float64[] pre_grasp_dof\n\
+float64[] final_grasp_dof\n\
+#geometry_msgs/Pose demonstration_pose\n\
 \n\
+int32 TYPE_UNKNOWN = 1\n\
+int32 TYPE_FINGERTIP = 2\n\
+int32 TYPE_POWER_GRASP = 3        # free grasp\n\
+int32 TYPE_TABLECONTACT_GRASP = 4 # finger will make contact w/ table\n\
+int32 SPREAD_DOF=0\n\
+int32 FINGER_1_DOF=1\n\
+int32 FINGER_2_DOF=2\n\
+int32 FINGER_3_DOF=3\n\
+int32 SOURCE_EIGENGRASPS=1\n\
+int32 SOURCE_HUMAN=2\n\
+int32 SOURCE_HUMAN_REFINED=3\n\
+int32 SOURCE_TABLETOP_ALIGNED=7\n\
 \n\
 \n\
 ================================================================================\n\
@@ -261,6 +290,25 @@ float64 x\n\
 float64 y\n\
 float64 z\n\
 float64 w\n\
+\n\
+================================================================================\n\
+MSG: geometry_msgs/Vector3Stamped\n\
+# This represents a Vector3 with reference coordinate frame and timestamp\n\
+Header header\n\
+Vector3 vector\n\
+\n\
+================================================================================\n\
+MSG: geometry_msgs/Vector3\n\
+# This represents a vector in free space. \n\
+# It is only meant to represent a direction. Therefore, it does not\n\
+# make sense to apply a translation to it (e.g., when applying a \n\
+# generic rigid transformation to a Vector3, tf2 will only apply the\n\
+# rotation). If you want your data to be translatable too, use the\n\
+# geometry_msgs/Point message instead.\n\
+\n\
+float64 x\n\
+float64 y\n\
+float64 z\n\
 ";
   }
 

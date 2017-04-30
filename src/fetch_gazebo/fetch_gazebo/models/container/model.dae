@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.71.0 commit date:2014-06-12, commit time:18:39, hash:169c95b</authoring_tool>
     </contributor>
-    <created>2017-04-28T13:57:44</created>
-    <modified>2017-04-28T13:57:44</modified>
+    <created>2017-04-29T23:26:04</created>
+    <modified>2017-04-29T23:26:04</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -145,7 +145,7 @@
     <geometry id="Cube-mesh" name="Cube">
       <mesh>
         <source id="Cube-mesh-positions">
-          <float_array id="Cube-mesh-positions-array" count="48">1 1 -1 1 -1 -1 -1 -0.9999998 -1 -0.9999997 1 -1 1 0.9999995 1 0.9999994 -1.000001 1 -1 -0.9999997 1 -1 1 1 0.917932 0.917931 1 0.917931 -0.9179322 1 -0.9179319 -0.9179313 1 -0.9179315 0.9179316 1 0.917932 0.917931 -0.8051748 0.917931 -0.9179322 -0.8051748 -0.9179319 -0.9179313 -0.8051748 -0.9179315 0.9179316 -0.8051748</float_array>
+          <float_array id="Cube-mesh-positions-array" count="48">1 1 -1 1 -1 -1 -1 -0.9999998 -1 -0.9999997 1 -1 1 0.9999995 -0.3411726 0.9999994 -1.000001 -0.3411726 -1 -0.9999997 -0.3411726 -1 1 -0.3411726 0.917932 0.917931 -0.3411726 0.917931 -0.9179322 -0.3411726 -0.9179319 -0.9179313 -0.3411726 -0.9179315 0.9179316 -0.3411726 0.917932 0.917931 -0.8051748 0.917931 -0.9179322 -0.8051748 -0.9179319 -0.9179313 -0.8051748 -0.9179315 0.9179316 -0.8051748</float_array>
           <technique_common>
             <accessor source="#Cube-mesh-positions-array" count="16" stride="3">
               <param name="X" type="float"/>
@@ -155,7 +155,7 @@
           </technique_common>
         </source>
         <source id="Cube-mesh-normals">
-          <float_array id="Cube-mesh-normals-array" count="84">0 0 -1 0 0 1 1 -5.66244e-7 3.27825e-7 -4.76837e-7 -1 0 -1 2.08616e-7 -1.19209e-7 2.08616e-7 1 2.38419e-7 1 -2.27268e-7 0 0 0 1 0 0 1 0 0 1 0 0 1 4.87002e-7 1 0 -3.24668e-7 -1 0 -1 5.51936e-7 0 0 0 -1 0 0 1 1 0 -2.38419e-7 0 -1 -2.98023e-7 -1 2.38419e-7 -1.49012e-7 2.68221e-7 1 1.78814e-7 1 -2.27268e-7 0 0 0 1 0 0 1 0 0 1 0 0 1 4.87002e-7 1 0 -3.24668e-7 -1 0 -1 5.51936e-7 0</float_array>
+          <float_array id="Cube-mesh-normals-array" count="84">0 0 -1 0 0 1 1 -5.66244e-7 9.95178e-7 -4.76837e-7 -1 2.71412e-7 -1 2.08616e-7 -3.61883e-7 2.08616e-7 1 7.23766e-7 1 -2.27268e-7 0 0 0 1 0 0 1 0 0 1 0 0 1 4.87002e-7 1 0 -3.24668e-7 -1 0 -1 5.51936e-7 0 0 0 -1 0 0 1 1 0 -7.23766e-7 0 -1 -9.04708e-7 -1 2.38419e-7 -4.52354e-7 2.68221e-7 1 5.42825e-7 1 -2.27268e-7 0 0 0 1 0 0 1 0 0 1 0 0 1 4.87002e-7 1 0 -3.24668e-7 -1 0 -1 5.51936e-7 0</float_array>
           <technique_common>
             <accessor source="#Cube-mesh-normals-array" count="28" stride="3">
               <param name="X" type="float"/>

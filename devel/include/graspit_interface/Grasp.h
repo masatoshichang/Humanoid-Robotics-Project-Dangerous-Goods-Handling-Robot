@@ -16,6 +16,9 @@
 #include <ros/message_operations.h>
 
 #include <geometry_msgs/Pose.h>
+#include <geometry_msgs/Vector3Stamped.h>
+#include <geometry_msgs/Pose.h>
+#include <geometry_msgs/Pose.h>
 
 namespace graspit_interface
 {
@@ -29,14 +32,36 @@ struct Grasp_
     , pose()
     , dofs()
     , epsilon_quality(0.0)
-    , volume_quality(0.0)  {
+    , volume_quality(0.0)
+    , approach_direction()
+    , object_name()
+    , grasp_id(0)
+    , secondary_qualities()
+    , grasp_source(0)
+    , grasp_group(0)
+    , grasp_type(0)
+    , pre_grasp_pose()
+    , final_grasp_pose()
+    , pre_grasp_dof()
+    , final_grasp_dof()  {
     }
   Grasp_(const ContainerAllocator& _alloc)
     : graspable_body_id(0)
     , pose(_alloc)
     , dofs(_alloc)
     , epsilon_quality(0.0)
-    , volume_quality(0.0)  {
+    , volume_quality(0.0)
+    , approach_direction(_alloc)
+    , object_name(_alloc)
+    , grasp_id(0)
+    , secondary_qualities(_alloc)
+    , grasp_source(0)
+    , grasp_group(0)
+    , grasp_type(0)
+    , pre_grasp_pose(_alloc)
+    , final_grasp_pose(_alloc)
+    , pre_grasp_dof(_alloc)
+    , final_grasp_dof(_alloc)  {
   (void)_alloc;
     }
 
@@ -57,8 +82,53 @@ struct Grasp_
    typedef double _volume_quality_type;
   _volume_quality_type volume_quality;
 
+   typedef  ::geometry_msgs::Vector3Stamped_<ContainerAllocator>  _approach_direction_type;
+  _approach_direction_type approach_direction;
+
+   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _object_name_type;
+  _object_name_type object_name;
+
+   typedef int32_t _grasp_id_type;
+  _grasp_id_type grasp_id;
+
+   typedef std::vector<double, typename ContainerAllocator::template rebind<double>::other >  _secondary_qualities_type;
+  _secondary_qualities_type secondary_qualities;
+
+   typedef int32_t _grasp_source_type;
+  _grasp_source_type grasp_source;
+
+   typedef int32_t _grasp_group_type;
+  _grasp_group_type grasp_group;
+
+   typedef int32_t _grasp_type_type;
+  _grasp_type_type grasp_type;
+
+   typedef  ::geometry_msgs::Pose_<ContainerAllocator>  _pre_grasp_pose_type;
+  _pre_grasp_pose_type pre_grasp_pose;
+
+   typedef  ::geometry_msgs::Pose_<ContainerAllocator>  _final_grasp_pose_type;
+  _final_grasp_pose_type final_grasp_pose;
+
+   typedef std::vector<double, typename ContainerAllocator::template rebind<double>::other >  _pre_grasp_dof_type;
+  _pre_grasp_dof_type pre_grasp_dof;
+
+   typedef std::vector<double, typename ContainerAllocator::template rebind<double>::other >  _final_grasp_dof_type;
+  _final_grasp_dof_type final_grasp_dof;
 
 
+    enum { TYPE_UNKNOWN = 1 };
+     enum { TYPE_FINGERTIP = 2 };
+     enum { TYPE_POWER_GRASP = 3 };
+     enum { TYPE_TABLECONTACT_GRASP = 4 };
+     enum { SPREAD_DOF = 0 };
+     enum { FINGER_1_DOF = 1 };
+     enum { FINGER_2_DOF = 2 };
+     enum { FINGER_3_DOF = 3 };
+     enum { SOURCE_EIGENGRASPS = 1 };
+     enum { SOURCE_HUMAN = 2 };
+     enum { SOURCE_HUMAN_REFINED = 3 };
+     enum { SOURCE_TABLETOP_ALIGNED = 7 };
+ 
 
   typedef boost::shared_ptr< ::graspit_interface::Grasp_<ContainerAllocator> > Ptr;
   typedef boost::shared_ptr< ::graspit_interface::Grasp_<ContainerAllocator> const> ConstPtr;
@@ -71,6 +141,30 @@ typedef boost::shared_ptr< ::graspit_interface::Grasp > GraspPtr;
 typedef boost::shared_ptr< ::graspit_interface::Grasp const> GraspConstPtr;
 
 // constants requiring out of line definition
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
+
+   
 
 
 
@@ -134,12 +228,12 @@ struct MD5Sum< ::graspit_interface::Grasp_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "58932a8767c4b80df3283b53f1b1b36c";
+    return "93371a0db54f716d8aa408e86b086783";
   }
 
   static const char* value(const ::graspit_interface::Grasp_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x58932a8767c4b80dULL;
-  static const uint64_t static_value2 = 0xf3283b53f1b1b36cULL;
+  static const uint64_t static_value1 = 0x93371a0db54f716dULL;
+  static const uint64_t static_value2 = 0x8aa408e86b086783ULL;
 };
 
 template<class ContainerAllocator>
@@ -170,9 +264,38 @@ float64[] dofs\n\
 float64 epsilon_quality\n\
 float64 volume_quality\n\
 \n\
+# The approach direction to take before picking an object\n\
+geometry_msgs/Vector3Stamped approach_direction\n\
+\n\
+#model_name of object to be grasped\n\
+string object_name\n\
+\n\
+int32 grasp_id\n\
+\n\
+float64[] secondary_qualities\n\
+int32 grasp_source\n\
+int32 grasp_group\n\
+int32 grasp_type\n\
 \n\
 \n\
+geometry_msgs/Pose pre_grasp_pose\n\
+geometry_msgs/Pose final_grasp_pose\n\
+float64[] pre_grasp_dof\n\
+float64[] final_grasp_dof\n\
+#geometry_msgs/Pose demonstration_pose\n\
 \n\
+int32 TYPE_UNKNOWN = 1\n\
+int32 TYPE_FINGERTIP = 2\n\
+int32 TYPE_POWER_GRASP = 3        # free grasp\n\
+int32 TYPE_TABLECONTACT_GRASP = 4 # finger will make contact w/ table\n\
+int32 SPREAD_DOF=0\n\
+int32 FINGER_1_DOF=1\n\
+int32 FINGER_2_DOF=2\n\
+int32 FINGER_3_DOF=3\n\
+int32 SOURCE_EIGENGRASPS=1\n\
+int32 SOURCE_HUMAN=2\n\
+int32 SOURCE_HUMAN_REFINED=3\n\
+int32 SOURCE_TABLETOP_ALIGNED=7\n\
 \n\
 \n\
 ================================================================================\n\
@@ -196,6 +319,43 @@ float64 x\n\
 float64 y\n\
 float64 z\n\
 float64 w\n\
+\n\
+================================================================================\n\
+MSG: geometry_msgs/Vector3Stamped\n\
+# This represents a Vector3 with reference coordinate frame and timestamp\n\
+Header header\n\
+Vector3 vector\n\
+\n\
+================================================================================\n\
+MSG: std_msgs/Header\n\
+# Standard metadata for higher-level stamped data types.\n\
+# This is generally used to communicate timestamped data \n\
+# in a particular coordinate frame.\n\
+# \n\
+# sequence ID: consecutively increasing ID \n\
+uint32 seq\n\
+#Two-integer timestamp that is expressed as:\n\
+# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n\
+# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n\
+# time-handling sugar is provided by the client library\n\
+time stamp\n\
+#Frame this data is associated with\n\
+# 0: no frame\n\
+# 1: global frame\n\
+string frame_id\n\
+\n\
+================================================================================\n\
+MSG: geometry_msgs/Vector3\n\
+# This represents a vector in free space. \n\
+# It is only meant to represent a direction. Therefore, it does not\n\
+# make sense to apply a translation to it (e.g., when applying a \n\
+# generic rigid transformation to a Vector3, tf2 will only apply the\n\
+# rotation). If you want your data to be translatable too, use the\n\
+# geometry_msgs/Point message instead.\n\
+\n\
+float64 x\n\
+float64 y\n\
+float64 z\n\
 ";
   }
 
@@ -219,6 +379,17 @@ namespace serialization
       stream.next(m.dofs);
       stream.next(m.epsilon_quality);
       stream.next(m.volume_quality);
+      stream.next(m.approach_direction);
+      stream.next(m.object_name);
+      stream.next(m.grasp_id);
+      stream.next(m.secondary_qualities);
+      stream.next(m.grasp_source);
+      stream.next(m.grasp_group);
+      stream.next(m.grasp_type);
+      stream.next(m.pre_grasp_pose);
+      stream.next(m.final_grasp_pose);
+      stream.next(m.pre_grasp_dof);
+      stream.next(m.final_grasp_dof);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -252,6 +423,43 @@ struct Printer< ::graspit_interface::Grasp_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.epsilon_quality);
     s << indent << "volume_quality: ";
     Printer<double>::stream(s, indent + "  ", v.volume_quality);
+    s << indent << "approach_direction: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Vector3Stamped_<ContainerAllocator> >::stream(s, indent + "  ", v.approach_direction);
+    s << indent << "object_name: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.object_name);
+    s << indent << "grasp_id: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.grasp_id);
+    s << indent << "secondary_qualities[]" << std::endl;
+    for (size_t i = 0; i < v.secondary_qualities.size(); ++i)
+    {
+      s << indent << "  secondary_qualities[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.secondary_qualities[i]);
+    }
+    s << indent << "grasp_source: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.grasp_source);
+    s << indent << "grasp_group: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.grasp_group);
+    s << indent << "grasp_type: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.grasp_type);
+    s << indent << "pre_grasp_pose: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Pose_<ContainerAllocator> >::stream(s, indent + "  ", v.pre_grasp_pose);
+    s << indent << "final_grasp_pose: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Pose_<ContainerAllocator> >::stream(s, indent + "  ", v.final_grasp_pose);
+    s << indent << "pre_grasp_dof[]" << std::endl;
+    for (size_t i = 0; i < v.pre_grasp_dof.size(); ++i)
+    {
+      s << indent << "  pre_grasp_dof[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.pre_grasp_dof[i]);
+    }
+    s << indent << "final_grasp_dof[]" << std::endl;
+    for (size_t i = 0; i < v.final_grasp_dof.size(); ++i)
+    {
+      s << indent << "  final_grasp_dof[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.final_grasp_dof[i]);
+    }
   }
 };
 
