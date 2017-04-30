@@ -29,6 +29,9 @@ catkin_package()
 install(
   PROGRAMS
     scripts/robot_control_node/demo.py
+    scripts/robot_control_node/control_robot.py
+
+
     scripts/opencv_node/test2.py
     scripts/robot_control_node/grasp_test.py
 

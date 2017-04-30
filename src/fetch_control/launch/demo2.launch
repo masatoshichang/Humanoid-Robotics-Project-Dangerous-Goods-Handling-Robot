@@ -1,7 +1,7 @@
 <launch>
 
   <!-- Start navigation -->
-  <include file="$(find fetch_gazebo_demo2)/launch/fetch_nav.launch" />
+  <include file="$(find fetch_gazebo_demo)/launch/fetch_nav.launch" />
 
   <!-- Start MoveIt -->
   <include file="$(find fetch_moveit_config)/launch/move_group.launch" >
@@ -10,12 +10,12 @@
 
   <!-- Start Perception -->
   <node name="basic_grasping_perception" pkg="simple_grasping" type="basic_grasping_perception" >
-    <rosparam command="load" file="$(find fetch_gazebo_demo2)/config/simple_grasping.yaml" />
+    <rosparam command="load" file="$(find fetch_gazebo_demo)/config/simple_grasping.yaml" />
   </node>
 
   <!-- Drive to the table, pick stuff up -->
 
-  <node name="demo" pkg="fetch_control" type="demo.py" output="screen" />
+  <node name="demo" pkg="fetch_control" type="control_robot.py" output="screen" />
 
 
 <!--

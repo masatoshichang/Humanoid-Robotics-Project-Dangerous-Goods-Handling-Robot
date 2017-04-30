@@ -298,8 +298,11 @@ if __name__ == "__main__":
     except rospy.ServiceException, e:
         print("Service call failed: ", e)
 
+    exit()
+    """
     import time
     time.sleep(100)
+    """
     """
     exit()
 
@@ -345,9 +348,12 @@ if __name__ == "__main__":
     torso_action.move_to([0.0, ])
 
     rospy.loginfo("Going to container")
-    move_base.goto(-3, 0, 0)
+    move_base.goto(-2, 0, 0)
     rospy.loginfo("Approaching container")
     #move_base.goto(-4.1, 0, 0)
+
+    move_base.goto(4.1, 0, 0.0)
+
 
 
     """

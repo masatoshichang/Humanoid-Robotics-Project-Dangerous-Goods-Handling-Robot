@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<sdf version='1.4'>
+  <model name="container">
+      <static>0</static>
+      <link name='link'>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://container/model.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://container/model.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://container/model.dae</uri>
+              <name></name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0.000000</linear>
+          <angular>0.000000</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>0</gravity>
+      </link>
+  </model>
+</sdf>
