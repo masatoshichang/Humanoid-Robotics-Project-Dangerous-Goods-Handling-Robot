@@ -8,3 +8,8 @@
 	path = src/fetch_gazebo
     url = https://github.com/HumanoidRobotics/fetch_gazebo.git
     ignore = dirty
+
+[submodule "src/fetch_control/scripts/opencv_node/classifier"]
+    path = src/fetch_control/scripts/opencv_node/classifier
+    url = https://github.com/Wei2624/classifier.git
+
