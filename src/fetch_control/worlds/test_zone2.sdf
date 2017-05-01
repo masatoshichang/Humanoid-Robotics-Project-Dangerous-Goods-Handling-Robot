@@ -55,6 +55,11 @@
         <pose>0 2.75 0.58 0 0 0</pose>
     </include>
 
+    <include>
+        <uri>model://label_radioactive</uri>
+        <pose>0 4.347 1.195 0 0 0</pose>
+    </include>
+
 
 
 
@@ -71,7 +76,7 @@
 
       <light type="point" name="point">
     <pose>0 0 2 0 0 0</pose>
-    <diffuse>127 127 127 255</diffuse>
+    <diffuse>255 255 255 255</diffuse>
     <specular>25 25 25 25</specular>
     <attenuation>
       <range>20</range>
