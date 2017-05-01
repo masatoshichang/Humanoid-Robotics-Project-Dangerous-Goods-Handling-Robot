@@ -12,11 +12,48 @@ from cv_bridge import CvBridge, CvBridgeError
 
 from scipy.spatial import distance as dist
 
-from fetch_com=ntrol.srv import *
+from fetch_control.srv import *
 
 import numpy as np
 
 from hsv_thresh import *
+
+
+
+
+import cv2
+import os
+from os import listdir
+import numpy as np
+import scipy
+import sys
+from sklearn.decomposition import PCA
+import csv
+from sklearn.externals import joblib
+from sklearn import svm
+
+from classifier.api import *
+
+import os
+cwd = os.getcwd()
+print(cwd)
+"""
+pca_model = joblib.load("classifier/pca.pkl")
+model = joblib.load("classifier/classifier.pkl")
+
+
+def classifier(img):
+    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    input_img = cv2.resize(gray_image,(140,140),interpolation=cv2.INTER_AREA)
+    input_img = input_img.reshape((19600))
+    input_img = pca_model.transform(input_img)
+    result = model.predict(input_img)
+    print(result)
+    return int(result[0])
+
+
+"""
+
 
 topic = '/head_camera/rgb/image_raw'
 
@@ -198,8 +235,11 @@ def find_label(image):
     ordered = order_points(np.array(list_points))
 
 
-    warp_image(image, ordered)
+    warped = warp_image(image, ordered)
 
+    print('Classifying...')
+    value = classifier(warped)
+    print('classified: ', value)
 
 
 
@@ -225,11 +265,17 @@ def warp_image(image, ordered):
     M = cv2.getPerspectiveTransform(ordered, dst)
     warped = cv2.warpPerspective(image, M, (maxWidth, maxHeight))
 
+    # Rotate
+    image_center = tuple(np.array(warped.shape)/2)
+    rot_mat = cv2.getRotationMatrix2D((image_center[0], image_center[1]), -90, 1.0)
+    warped = cv2.warpAffine(warped, rot_mat, (warped.shape[0], warped.shape[1]), flags=cv2.INTER_LINEAR)
+
+    # Flip
+    warped = cv2.flip( warped, 1)
+
     cv2.imshow('warped', warped)
 
-
-
-
+    return warped
 
 
 
@@ -256,6 +302,7 @@ def order_points(pts):
 
 
 def can_see_cube(req):
+    image_global
     return CanSeeCubeOpencv()
 
 
