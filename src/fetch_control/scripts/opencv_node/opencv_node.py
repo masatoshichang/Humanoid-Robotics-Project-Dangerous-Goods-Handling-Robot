@@ -221,9 +221,9 @@ def find_label(image):
 
     warped = warp_image(image, ordered)
 
-    print('Classifying...')
+    # print('Classifying...')
     value = classifier(warped)
-    print('classified: ', value)
+    # print('classified: ', value)
 
 
 
