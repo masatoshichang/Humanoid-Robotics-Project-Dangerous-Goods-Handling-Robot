@@ -4,21 +4,37 @@ import grasp_execution_node
 from graspit_commander import GraspitCommander
 
 import graspit_interface.msg
+
+from graspit_msgs.srv import *
+
 import geometry_msgs
 import actionlib
 
 import rospy
+from geometry_msgs.msg import PoseStamped, Point
+# GraspitCommander.loadWorld("test_grasp")
+# # GraspitCommander.importGraspableBody("/home/masatoshichang/models/doughnut4.ply")
+# GraspitCommander.importRobot('fetch_gripper')
+#
+# print('doughnut')
+# grasp_output = GraspitCommander.planGrasps(max_steps=50000)
+#
+# print(grasp_output)
+#
+# unchecked_for_reachability_grasps = grasp_output.grasps
 
-GraspitCommander.loadWorld("test_grasp")
-# GraspitCommander.importGraspableBody("/home/masatoshichang/models/doughnut4.ply")
-GraspitCommander.importRobot('fetch_gripper')
 
-print('doughnut')
-grasp_output = GraspitCommander.planGrasps(max_steps=50000)
+service_proxy = rospy.ServiceProxy("/world_manager/add_object", graspit_msgs.srv.AddObject)
 
-print(grasp_output)
+object_pose = PoseStamped()
+object_pose.pose.position = Point(2.75, 0, 0.58)
+object_pose.pose.orientation.w = 1
+object_pose.header.frame_id = "map"
 
-unchecked_for_reachability_grasps = grasp_output.grasps
+
+service_proxy('demo_cube', '/home/masatoshichang/cube.ply', object_pose)
+
+
 
 print('analyze_grasp_action')
 reachability_client = actionlib.SimpleActionClient('analyze_grasp_action', graspit_interface.msg.CheckGraspReachabilityAction)
