@@ -4,8 +4,10 @@
   <include file="$(find graspit_interface)/launch/graspit_interface.launch" >
   </include>
 
+  <!--
   <include file="$(find fetch_moveit_config)/launch/demo.launch" >
   </include>
+-->
 
   <include file="$(find reachability_analyzer)/launch/reachability_analyzer.launch" >
   </include>
