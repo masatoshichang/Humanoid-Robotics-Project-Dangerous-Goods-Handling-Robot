@@ -23,7 +23,7 @@
 
 
 
-  <node name="opencv" pkg="fetch_control" type="test2.py" output="screen" cwd="node" />
+  <node name="opencv" pkg="fetch_control" type="opencv_node.py" output="screen" cwd="node" />
 
 
 
