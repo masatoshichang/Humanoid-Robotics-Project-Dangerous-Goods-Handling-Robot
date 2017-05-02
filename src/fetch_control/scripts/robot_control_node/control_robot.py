@@ -114,7 +114,13 @@ class ControlRobot(object):
 
     def goto_table2(self):
         rospy.loginfo("Going to table 2")
-        self.move_base.goto(0, 1.9, 1.5707)
+
+        self.move_base.goto(0, 1.0, 1.5707)
+        import IPython
+        IPython.embed()
+        rospy.loginfo("approaching table 2")
+
+        self.move_base.goto(0, 1.5, 1.5707)
 
     def goto_origin_face_south(self):
         rospy.loginfo("Going to origin facing south")
@@ -197,11 +203,18 @@ if __name__ == "__main__":
     # control_robot.lookat_table1()
     control_robot.check_cube_point_cloud()
 
-    """
+
     control_robot.move_torso(0.4)
+
+    control_robot.lookat_forward()
+
+
     # control_robot.lookat_cube()
+
     control_robot.lookat_down_high()
 
+    exit()
+    """
 
     picked_up_cube = False
     if control_robot.check_cube_point_cloud() and not picked_up_cube:
