@@ -32,7 +32,7 @@ install(
     scripts/robot_control_node/control_robot.py
 
 
-    scripts/opencv_node/test2.py
+    scripts/opencv_node/opencv_node.py
     scripts/robot_control_node/grasp_test.py
 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
