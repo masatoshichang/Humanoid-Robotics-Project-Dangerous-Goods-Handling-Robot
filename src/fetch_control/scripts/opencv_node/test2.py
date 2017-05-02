@@ -37,22 +37,6 @@ from classifier.api import *
 import os
 cwd = os.getcwd()
 print(cwd)
-"""
-pca_model = joblib.load("classifier/pca.pkl")
-model = joblib.load("classifier/classifier.pkl")
-
-
-def classifier(img):
-    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    input_img = cv2.resize(gray_image,(140,140),interpolation=cv2.INTER_AREA)
-    input_img = input_img.reshape((19600))
-    input_img = pca_model.transform(input_img)
-    result = model.predict(input_img)
-    print(result)
-    return int(result[0])
-
-
-"""
 
 
 topic = '/head_camera/rgb/image_raw'
