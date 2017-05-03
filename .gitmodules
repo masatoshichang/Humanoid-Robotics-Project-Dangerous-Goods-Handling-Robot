@@ -11,3 +11,6 @@
 [submodule "src/fetch_control/scripts/opencv_node/classifier"]
 	path = src/fetch_control/scripts/opencv_node/classifier
 	url = https://github.com/Wei2624/classifier.git
+[submodule "src/grasp_execution"]
+	path = src/grasp_execution
+	url = https://github.com/CURG/grasp_execution.git
