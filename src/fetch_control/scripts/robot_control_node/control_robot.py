@@ -96,6 +96,8 @@ class ControlRobot(object):
 
             # Pick the block
             if self.grasping_client.pick(cube, grasps):
+                import IPython
+                IPython.embed()
                 break
             rospy.logwarn("Grasping failed.")
 
@@ -118,11 +120,11 @@ class ControlRobot(object):
         rospy.loginfo("Going to table 2")
 
         self.move_base.goto(0, 1.0, 1.5707)
-        import IPython
-        IPython.embed()
+        #import IPython
+        #IPython.embed()
         rospy.loginfo("approaching table 2")
 
-        self.move_base.goto(0, 1.5, 1.5707)
+        self.move_base.goto(0, 1.8, 1.5707)
 
     def goto_origin_face_south(self):
         rospy.loginfo("Going to origin facing south")
@@ -174,37 +176,6 @@ if __name__ == "__main__":
 
     control_robot.lookat_forward()
 
-    classification_respose = classification_service()
-
-    print('Got classification: ', classification_respose.result)
-
-
-    """
-    control_robot.move_torso(0.4)
-
-    control_robot.lookat_gripper()
-
-
-    exit()
-
-    #control_robot.lookat_test()
-
-    #exit()
-    """
-
-    """
-
-
-    control_robot.move_torso(0.4)
-    #control_robot.lookat_table1_label()
-    control_robot.lookat_cube()
-
-    #control_robot.lookat_left_down()
-
-
-
-    exit()
-    """
 
     control_robot.goto_table1()
     # control_robot.lookat_table1_label()
@@ -218,16 +189,21 @@ if __name__ == "__main__":
 
     control_robot.lookat_forward()
 
+    classification_respose = classification_service()
 
+    print('Got classification: ', classification_respose.result)
 
 
     # control_robot.lookat_cube()
 
-    # control_robot.lookat_down_high()
+    control_robot.lookat_down_high()
+    control_robot.lookat_down_high()
 
-    exit()
+    # control_robot.lookat_cube()
+    rospy.sleep(2)
+    cube = control_robot.pickup_cube()
+
     """
-
     picked_up_cube = False
     if control_robot.check_cube_point_cloud() and not picked_up_cube:
         cube = control_robot.pickup_cube()
@@ -248,6 +224,8 @@ if __name__ == "__main__":
 
     control_robot.lookat_down_high()
     """
+
+
     control_robot.lookat_forward()
 
 
@@ -259,10 +237,10 @@ if __name__ == "__main__":
     control_robot.goto_origin_face_south()
 
 
-    control_robot.goto_table2()
+    # control_robot.goto_table2()
 
 
-    control_robot.goto_origin_face_south()
+    # control_robot.goto_origin_face_south()
 
 
     control_robot.goto_container1()

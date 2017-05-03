@@ -94,8 +94,9 @@ class image_converter:
             except CvBridgeError as e:
                 print(e)
         except Exception as e:
-            print('DIED')
-            print(e)
+            #print('DIED')
+            #print(e)
+            pass
 
 
 
