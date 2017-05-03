@@ -5,6 +5,8 @@ import rospy
 # from fetch_control.robot_control_node import demo
 from demo import *
 
+from fetch_control.srv import *
+
 
 
 class ControlRobot(object):
@@ -166,7 +168,15 @@ if __name__ == "__main__":
         pass
 
     control_robot = ControlRobot()
+
+    classification_service = rospy.ServiceProxy('get_classification_service', GetClassification)
+
+
     control_robot.lookat_forward()
+
+    classification_respose = classification_service()
+
+    print('Got classification: ', classification_respose.result)
 
 
     """
@@ -209,9 +219,11 @@ if __name__ == "__main__":
     control_robot.lookat_forward()
 
 
+
+
     # control_robot.lookat_cube()
 
-    control_robot.lookat_down_high()
+    # control_robot.lookat_down_high()
 
     exit()
     """

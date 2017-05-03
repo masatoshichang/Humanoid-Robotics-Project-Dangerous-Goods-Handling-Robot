@@ -14,6 +14,7 @@ find_package(catkin REQUIRED roscpp rospy std_msgs genmsg pcl_conversions pcl_ro
 add_service_files(
    FILES
    CanSeeCube.srv
+   GetClassification.srv
 )
 
 ## Generate added messages and services with any dependencies listed here

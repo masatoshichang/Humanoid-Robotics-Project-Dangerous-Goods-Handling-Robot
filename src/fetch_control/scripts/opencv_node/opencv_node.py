@@ -44,6 +44,9 @@ topic = '/head_camera/rgb/image_raw'
 
 image_global = None
 
+
+classification_value = -1
+
 class CVServer(object):
 
     def __init__(self):
@@ -190,6 +193,7 @@ def square(image):
 
 
 def find_label(image):
+    global classification_value
     mask = HSVThresh().hsv_thresh_green(image)
     cv2.imshow('thresh', mask)
     im2, contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -224,6 +228,7 @@ def find_label(image):
     # print('Classifying...')
     value = classifier(warped)
     # print('classified: ', value)
+    classification_value = value
 
 
 
@@ -290,7 +295,8 @@ def can_see_cube(req):
     return CanSeeCubeOpencv()
 
 
-
+def get_classification(req):
+    return GetClassificationResponse(classification_value)
 
 
 
@@ -301,7 +307,7 @@ def main(args):
 
     cv_server = CVServer()
 
-
+    classification_service = rospy.Service('get_classification_service', GetClassification, get_classification)
     try:
         #rospy.spin()
         while True:
