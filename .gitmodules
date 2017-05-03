@@ -17,3 +17,6 @@
 [submodule "src/graspit-ros"]
 	path = src/graspit-ros
 	url = https://github.com/graspit-simulator/graspit-ros
+[submodule "src/graspit_commander"]
+	path = src/graspit_commander
+	url = https://github.com/graspit-simulator/graspit_commander.git
