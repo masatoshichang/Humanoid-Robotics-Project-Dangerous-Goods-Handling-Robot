@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version='1.4'>
   <model name="container">
-      <static>0</static>
+      <static>1</static>
       <link name='link'>
         <collision name="collision">
           <geometry>

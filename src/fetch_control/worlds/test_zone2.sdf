@@ -40,7 +40,18 @@
 
 
     <include>
-        <uri>model://label_corrosive</uri>
+        <uri>model://demo_cube</uri>
+        <pose>2.75 -0.2 0.58 0 0 0</pose>
+    </include>
+
+    <include>
+        <uri>model://demo_cube</uri>
+        <pose>2.75 0.2 0.58 0 0 0</pose>
+    </include>
+
+
+    <include>
+        <uri>model://label_radioactive</uri>
         <pose>4.347 0 1.195 0 0 -1.5708</pose>
     </include>
 
@@ -56,7 +67,7 @@
     </include>
 
     <include>
-        <uri>model://label_radioactive</uri>
+        <uri>model://label_corrosive</uri>
         <pose>0 4.347 1.195 0 0 0</pose>
     </include>
 
@@ -70,7 +81,7 @@
 
     <include>
         <uri>model://container</uri>
-        <pose>-3 0 0.65 0 0 0 </pose>
+        <pose>-3 0 0.4 0 0 0 </pose>
     </include>
 
 
