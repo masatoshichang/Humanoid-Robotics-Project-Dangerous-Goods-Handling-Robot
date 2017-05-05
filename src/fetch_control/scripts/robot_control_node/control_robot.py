@@ -96,8 +96,6 @@ class ControlRobot(object):
 
             # Pick the block
             if self.grasping_client.pick(cube, grasps):
-                import IPython
-                IPython.embed()
                 break
             rospy.logwarn("Grasping failed.")
 
@@ -130,19 +128,20 @@ class ControlRobot(object):
         rospy.loginfo("Going to origin facing south")
         self.move_base.goto(0, 0, 3.14)
 
+    def goto_position(self, x, y, theta):
+        self.move_base.goto(x, y, theta)
+
+    def rotate_south_from_table1(self):
+        self.move_base.goto(2.1, 0, 3.1415)
+
 
     def place_object(self, cube):
-        # Place the block
+            # Place the block
         while not rospy.is_shutdown():
             rospy.loginfo("Placing object...")
             pose = PoseStamped()
-            rospy.loginfo('Cube primitive:')
-            rospy.loginfo(cube.primitive_poses[0])
-            rospy.loginfo(dir(cube.primitive_poses[0]))
-
-
             pose.pose = cube.primitive_poses[0]
-            pose.pose.position.z += 0.5
+            pose.pose.position.z += 0.05
             pose.header.frame_id = cube.header.frame_id
             if self.grasping_client.place(cube, pose):
                 break
@@ -170,6 +169,10 @@ if __name__ == "__main__":
         pass
 
     control_robot = ControlRobot()
+
+    import IPython
+    IPython.embed()
+
 
     classification_service = rospy.ServiceProxy('get_classification_service', GetClassification)
 
@@ -230,9 +233,13 @@ if __name__ == "__main__":
 
 
 
-    # Lower torso
+    # Lower torso: Using planning request adapter 'Fix Start State Path Co
+
+
     rospy.loginfo("Lowering torso...")
     control_robot.move_torso(0.0)
+
+    control_robot.rotate_south_from_table1()
 
     control_robot.goto_origin_face_south()
 
