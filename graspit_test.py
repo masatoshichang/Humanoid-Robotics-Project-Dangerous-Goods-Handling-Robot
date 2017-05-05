@@ -1,3 +1,6 @@
+import IPython
+IPython.embed()
+
 import grasp_execution
 import grasp_execution_node
 
@@ -12,16 +15,16 @@ import actionlib
 
 import rospy
 from geometry_msgs.msg import PoseStamped, Point
-# GraspitCommander.loadWorld("test_grasp")
-# # GraspitCommander.importGraspableBody("/home/masatoshichang/models/doughnut4.ply")
-# GraspitCommander.importRobot('fetch_gripper')
-#
-# print('doughnut')
-# grasp_output = GraspitCommander.planGrasps(max_steps=50000)
-#
-# print(grasp_output)
-#
-# unchecked_for_reachability_grasps = grasp_output.grasps
+GraspitCommander.loadWorld("test_grasp")
+# GraspitCommander.importGraspableBody("/home/masatoshichang/models/doughnut4.ply")
+GraspitCommander.importRobot('fetch_gripper')
+
+print('doughnut')
+grasp_output = GraspitCommander.planGrasps(max_steps=50000)
+
+print(grasp_output)
+
+unchecked_for_reachability_grasps = grasp_output.grasps
 
 
 service_proxy = rospy.ServiceProxy("/world_manager/add_object", graspit_msgs.srv.AddObject)
@@ -67,7 +70,7 @@ for i, unchecked_grasp in enumerate(unchecked_for_reachability_grasps):
         grasp.final_grasp_dof = unchecked_grasp.dofs #have the gripper close all the way for now
 
         #this is the message we are sending to reachability analyzer to check for reachability
-        goal = graspit_interface.msg.CheckGraspReachabilityGoal()
+        goal = graspit_interface.msg.grasp_executionCheckGraspReachabilityGoal()
         goal.grasp = grasp
 
         reachability_client.send_goal(goal)
